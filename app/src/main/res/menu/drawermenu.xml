@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+  <item android:id="@+id/Horarios" android:title="Horarios" android:icon="@drawable/ic_reloj_24px"/>
+    <item android:id="@+id/Preferencias" android:title="Preferencias"  android:icon="@drawable/ic_preferencias_24px"/>
+    <item android:id="@+id/Configuracion" android:title="Configuracion"  android:icon="@drawable/ic_ajustes_24px"/>
+    <item android:id="@+id/Logout" android:title="Cerrar Sesion"  android:icon="@drawable/ic_logout_24px"/>
+
+</menu>
