@@ -12,7 +12,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
-public class MainLogin extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
 
     EditText Usuario, Contraseña, regUsuario, regContraseña,
@@ -55,7 +55,7 @@ public class MainLogin extends AppCompatActivity {
 
     }
 
-    //This is method for doing operation of check login
+    //This is method for doing operation of check activity_login
     private void ClickLogin() {
 
         login.setOnClickListener(new View.OnClickListener() {
@@ -103,7 +103,7 @@ public class MainLogin extends AppCompatActivity {
 
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.register, null);
+        View dialogView = inflater.inflate(R.layout.activity_register, null);
         dialog.setView(dialogView);
 
         regUsuario = dialogView.findViewById(R.id.regUsuario);
