@@ -14,4 +14,5 @@
     <string name="ConfirmEmailAddress">Confirm Email Address</string>
     <string name="SignUp">Sign Up</string>
     <string name="registrationPage">Registration Page</string>
+    <string name="title_activity_maps">Map</string>
 </resources>

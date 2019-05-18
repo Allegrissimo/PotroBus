@@ -24,12 +24,12 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
+        setContentView(R.layout.activity_login);
+        getSupportActionBar().hide();
         Usuario = findViewById(R.id.Usuario);
         Contraseña = findViewById(R.id.Contraseña);
-        login = findViewById(R.id.login);
-        signUp = findViewById(R.id.signUp);
+        login = findViewById(R.id.btnLogin);
+        signUp = findViewById(R.id.btnSignup);
         txtInLayoutUsername = findViewById(R.id.txtInLayoutUsername);
         txtInLayoutPassword = findViewById(R.id.txtInLayoutPassword);
         rememberMe = findViewById(R.id.Recordar);
@@ -45,7 +45,7 @@ public class LoginActivity extends AppCompatActivity {
                 ClickSignUp();
             }
         });
-        Button login = (Button) findViewById(R.id.login);
+        Button login = (Button) findViewById(R.id.btnLogin);
         login.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), Principal.class);

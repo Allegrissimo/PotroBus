@@ -19,16 +19,13 @@
        app:itemIconTint="@color/colorPrimaryDark"
        app:menu="@menu/drawermenu"
        android:layout_gravity="start">
-
-
-
-
    </android.support.design.widget.NavigationView>
 
    <LinearLayout
-
+   android:orientation="vertical"
    android:layout_width="match_parent"
    android:layout_height="match_parent">
+
 
 </LinearLayout>
 

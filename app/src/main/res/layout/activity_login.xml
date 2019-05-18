@@ -10,7 +10,7 @@
     android:orientation="horizontal"
     tools:ignore="DuplicateIds">
 
-    <android.support.constraint.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    <android.support.constraint.ConstraintLayout
         android:id="@+id/Constraint1"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -36,7 +36,6 @@
     </android.support.constraint.ConstraintLayout>
 
     <android.support.constraint.ConstraintLayout
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/Constraint2"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -132,7 +131,6 @@
     </android.support.constraint.ConstraintLayout>
 
     <android.support.constraint.ConstraintLayout
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/Constraint4"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -149,7 +147,7 @@
         app:layout_constraintTop_toBottomOf="@id/Constraint2">
 
         <Button
-            android:id="@+id/login"
+            android:id="@+id/btnLogin"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -161,13 +159,13 @@
             android:text="@string/Login"
             android:theme="@style/ButtonLogin"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/signUp"
+            app:layout_constraintEnd_toStartOf="@id/btnSignup"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="1.0" />
 
         <Button
-            android:id="@+id/signUp"
+            android:id="@+id/btnSignup"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -180,7 +178,7 @@
             android:theme="@style/ButtonSignUp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/login"
+            app:layout_constraintStart_toEndOf="@id/btnLogin"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0" />
 
