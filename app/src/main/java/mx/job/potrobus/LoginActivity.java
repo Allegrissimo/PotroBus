@@ -1,9 +1,11 @@
 package mx.job.potrobus;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
@@ -35,11 +37,7 @@ public class LoginActivity extends AppCompatActivity {
         txtInLayoutUsername = findViewById(R.id.txtInLayoutUsername);
         txtInLayoutPassword = findViewById(R.id.txtInLayoutPassword);
         rememberMe = findViewById(R.id.Recordar);
-
-
         ClickLogin();
-
-
         //SignUp's Button for showing registration page
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,6 +48,7 @@ public class LoginActivity extends AppCompatActivity {
         Button login = findViewById(R.id.btnLogin);
         login.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                //TODO: Use User API to login
                 Intent intent = new Intent(v.getContext(), MainActivity.class);
                 startActivityForResult(intent, 0);
             }
@@ -103,9 +102,9 @@ public class LoginActivity extends AppCompatActivity {
     //The method for opening the registration page and another processes or checks for registering
     private void ClickSignUp() {
 
-        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        final AlertDialog.Builder dialog = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.activity_register, null);
+        final View dialogView = inflater.inflate(R.layout.activity_register, null);
         dialog.setView(dialogView);
 
         regUsuario = dialogView.findViewById(R.id.regUsuario);
@@ -121,51 +120,28 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (regUsuario.getText().toString().trim().isEmpty()) {
-
                     regUsuario.setError("Porfavor llene el espacio");
-                } else {
-
-                }
-                if (regContraseña.getText().toString().trim().isEmpty()) {
+                } else if (regContraseña.getText().toString().trim().isEmpty()) {
                     txtInLayoutRegPassword.setPasswordVisibilityToggleEnabled(false);
                     regContraseña.setError("Porfavor llene el espacio");
                 } else {
                     txtInLayoutRegPassword.setPasswordVisibilityToggleEnabled(true);
-
-                }
-                if (regNombre.getText().toString().trim().isEmpty()) {
-
+                } if (regNombre.getText().toString().trim().isEmpty()) {
                     regNombre.setError("Porfavor llene el espacio");
-                } else {
-
-
-                }
-                if (regTelefono.getText().toString().trim().isEmpty()) {
-
+                } if (regTelefono.getText().toString().trim().isEmpty()) {
                     regTelefono.setError("Porfavor llene el espacio");
-                } else {
-
-                }
+                } else
                 if (regCorreo.getText().toString().trim().isEmpty()) {
-
                     regCorreo.setError("Porfavor llene el espacio");
-                } else {
-
-                }
-                if (regConfirmacion.getText().toString().trim().isEmpty()) {
-
+                } else if (regConfirmacion.getText().toString().trim().isEmpty()) {
                     regConfirmacion.setError("Porfavor llene el espacio");
                 } else {
+                    //TODO: Register the user through API and close the AlertDialog
+                    System.out.println("User registered");
 
                 }
             }
         });
-
-
         dialog.show();
-
-
     }
-
-
 }
