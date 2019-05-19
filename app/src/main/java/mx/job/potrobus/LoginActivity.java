@@ -12,6 +12,8 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
+import com.google.android.gms.maps.model.MarkerOptions;
+
 public class LoginActivity extends AppCompatActivity {
 
 
@@ -25,7 +27,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        getSupportActionBar().hide();
+        //getSupportActionBar().hide();
         Usuario = findViewById(R.id.Usuario);
         Contraseña = findViewById(R.id.Contraseña);
         login = findViewById(R.id.btnLogin);
@@ -45,10 +47,10 @@ public class LoginActivity extends AppCompatActivity {
                 ClickSignUp();
             }
         });
-        Button login = (Button) findViewById(R.id.btnLogin);
+        Button login = findViewById(R.id.btnLogin);
         login.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), Principal.class);
+                Intent intent = new Intent(v.getContext(), MainActivity.class);
                 startActivityForResult(intent, 0);
             }
         });
