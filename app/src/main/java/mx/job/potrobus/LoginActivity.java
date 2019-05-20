@@ -12,7 +12,9 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
-public class MainLogin extends AppCompatActivity {
+import com.google.android.gms.maps.model.MarkerOptions;
+
+public class LoginActivity extends AppCompatActivity {
 
 
     EditText Usuario, Contraseña, regUsuario, regContraseña,
@@ -24,12 +26,12 @@ public class MainLogin extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
+        setContentView(R.layout.activity_login);
+        //getSupportActionBar().hide();
         Usuario = findViewById(R.id.Usuario);
         Contraseña = findViewById(R.id.Contraseña);
-        login = findViewById(R.id.login);
-        signUp = findViewById(R.id.signUp);
+        login = findViewById(R.id.btnLogin);
+        signUp = findViewById(R.id.btnSignup);
         txtInLayoutUsername = findViewById(R.id.txtInLayoutUsername);
         txtInLayoutPassword = findViewById(R.id.txtInLayoutPassword);
         rememberMe = findViewById(R.id.Recordar);
@@ -45,17 +47,17 @@ public class MainLogin extends AppCompatActivity {
                 ClickSignUp();
             }
         });
-        Button login = (Button) findViewById(R.id.login);
+        Button login = findViewById(R.id.btnLogin);
         login.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), Principal.class);
+                Intent intent = new Intent(v.getContext(), MainActivity.class);
                 startActivityForResult(intent, 0);
             }
         });
 
     }
 
-    //This is method for doing operation of check login
+    //This is method for doing operation of check activity_login
     private void ClickLogin() {
 
         login.setOnClickListener(new View.OnClickListener() {
@@ -103,7 +105,7 @@ public class MainLogin extends AppCompatActivity {
 
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.register, null);
+        View dialogView = inflater.inflate(R.layout.activity_register, null);
         dialog.setView(dialogView);
 
         regUsuario = dialogView.findViewById(R.id.regUsuario);
