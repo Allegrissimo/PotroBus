@@ -13,6 +13,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import mx.job.potrobus.Entities.Encrypter;
 import mx.job.potrobus.Entities.Usuario;
 import mx.job.potrobus.Interfaces.UserAPI;
 import retrofit2.Call;
@@ -78,6 +79,7 @@ public class LoginActivity extends AppCompatActivity {
                     txtInLayoutUsername.setError("Debe escribir su usuario");
                 } else {
                     username = edUsernameLogin.getText().toString();
+                    edUsernameLogin.setText("");
                 }
                 if (edContrasenaLogin.getText().toString().trim().isEmpty()) {
                     Snackbar snackbar = Snackbar.make(view, "Porfavor llene el espacio",
@@ -88,6 +90,7 @@ public class LoginActivity extends AppCompatActivity {
                     txtInLayoutPassword.setError("Debe escribir su contraseña");
                 } else {
                     contrasena = edContrasenaLogin.getText().toString();
+                    edContrasenaLogin.setText("");
                 }
 
                 if (rememberMe.isChecked()) {
@@ -99,22 +102,27 @@ public class LoginActivity extends AppCompatActivity {
                 if(username.isEmpty() || contrasena.isEmpty()){
                     Toast.makeText(getApplicationContext(), "Usuario o contraseña estan vacios", Toast.LENGTH_SHORT).show();
                 }else{
-                    Usuario u = new Usuario(null, null, username, contrasena, null);
+                    String un = new Encrypter().getHash(username.getBytes());
+                    String psw = new Encrypter().getHash(contrasena.getBytes());
+                    Usuario u = new Usuario(null, un, null, psw, null);
                     UserAPI userAPI = retrofit.create(UserAPI.class);
                     Call<Usuario> call = userAPI.login(u);
                     call.enqueue(new Callback<Usuario>() {
                         @Override
                         public void onResponse(Call<Usuario> call, Response<Usuario> response) {
+                            System.out.println(response.code());
                             if (response.code()==200){
                                 //TODO: Save user data on SQLite locally
                                 Intent intent = new Intent(view.getContext(), DrawerActivity.class);
                                 startActivityForResult(intent, 0);
+                            }else{
+                                Toast.makeText(getApplicationContext(), "Credenciales rechazadas", Toast.LENGTH_SHORT).show();
                             }
                         }
 
                         @Override
                         public void onFailure(Call<Usuario> call, Throwable t) {
-                            Toast.makeText(getApplicationContext(), "Credenciales rechazadas", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), "Error en el servidor", Toast.LENGTH_LONG).show();
                         }
                     });
                 }
@@ -163,12 +171,12 @@ public class LoginActivity extends AppCompatActivity {
                     edConfirmacion.setError("Porfavor llene el espacio");
                 } else {
                     //TODO: Register the user through API and close the AlertDialog
-
-                    Usuario u = new Usuario(edNombre.getText().toString(),
-                                            edUsername.getText().toString(),
-                                            edCorreo.getText().toString(),
-                                            edContrasena.getText().toString(),
-                                            edTelefono.getText().toString());
+                    Encrypter encrypter = new Encrypter();
+                    Usuario u = new Usuario(encrypter.getHash(edNombre.getText().toString().getBytes()),
+                            encrypter.getHash(edUsername.getText().toString().getBytes()),
+                            encrypter.getHash(edCorreo.getText().toString().getBytes()),
+                            encrypter.getHash(edContrasena.getText().toString().getBytes()),
+                            encrypter.getHash(edTelefono.getText().toString().getBytes()));
                     UserAPI userAPI = retrofit.create(UserAPI.class);
                     Call<Usuario> call = userAPI.signup(u);
                     call.enqueue(new Callback<Usuario>() {
