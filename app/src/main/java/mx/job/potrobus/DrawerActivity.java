@@ -37,6 +37,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.gson.Gson;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -107,7 +109,9 @@ public class DrawerActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_logout) {
+            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+            startActivityForResult(intent, 0);
             return true;
         }
 
@@ -201,7 +205,10 @@ public class DrawerActivity extends AppCompatActivity
                 return true;
             }
         });
+        //Escucha el ws con las coordenadas reales
         setRepeatingAsyncTask();
+        //Hace la smulación de movimiento
+        //AnimarBus();
     }
 
     private void setRepeatingAsyncTask() {

@@ -70,7 +70,6 @@ public class LoginActivity extends AppCompatActivity {
                 String username="";
                 String contrasena="";
                 if (edUsernameLogin.getText().toString().trim().isEmpty()) {
-
                     Snackbar snackbar = Snackbar.make(view, "Porfavor llene el espacio",
                             Snackbar.LENGTH_LONG);
                     View snackbarView = snackbar.getView();
@@ -79,7 +78,7 @@ public class LoginActivity extends AppCompatActivity {
                     txtInLayoutUsername.setError("Debe escribir su usuario");
                 } else {
                     username = edUsernameLogin.getText().toString();
-                    edUsernameLogin.setText("");
+
                 }
                 if (edContrasenaLogin.getText().toString().trim().isEmpty()) {
                     Snackbar snackbar = Snackbar.make(view, "Porfavor llene el espacio",
@@ -90,16 +89,14 @@ public class LoginActivity extends AppCompatActivity {
                     txtInLayoutPassword.setError("Debe escribir su contraseña");
                 } else {
                     contrasena = edContrasenaLogin.getText().toString();
-                    edContrasenaLogin.setText("");
+
                 }
 
                 if (rememberMe.isChecked()) {
                     //TODO: Remember credentials
                     System.out.println("Recordar");
                 }
-                if(username.isEmpty() || contrasena.isEmpty()){
-                    Toast.makeText(getApplicationContext(), "Usuario o contraseña estan vacios", Toast.LENGTH_SHORT).show();
-                }else{
+                if (!username.isEmpty() && !contrasena.isEmpty()) {
                     String un = new Encrypter().getHash(username.getBytes());
                     String psw = new Encrypter().getHash(contrasena.getBytes());
                     Usuario u = new Usuario(null, un, null, psw, null);
@@ -115,6 +112,8 @@ public class LoginActivity extends AppCompatActivity {
                                 startActivityForResult(intent, 0);
                             }else{
                                 Toast.makeText(getApplicationContext(), "Credenciales rechazadas", Toast.LENGTH_SHORT).show();
+                                edContrasenaLogin.setText("");
+                                edUsernameLogin.setText("");
                             }
                         }
 
