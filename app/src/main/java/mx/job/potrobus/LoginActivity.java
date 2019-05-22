@@ -96,8 +96,6 @@ public class LoginActivity extends AppCompatActivity {
                 if (rememberMe.isChecked()) {
                     //TODO: Remember credentials
                     System.out.println("Recordar");
-                } else {
-                    //TODO: Nothing really
                 }
                 if(username.isEmpty() || contrasena.isEmpty()){
                     Toast.makeText(getApplicationContext(), "Usuario o contraseña estan vacios", Toast.LENGTH_SHORT).show();
@@ -170,7 +168,6 @@ public class LoginActivity extends AppCompatActivity {
                 } else if (edConfirmacion.getText().toString().trim().isEmpty()) {
                     edConfirmacion.setError("Porfavor llene el espacio");
                 } else {
-                    //TODO: Register the user through API and close the AlertDialog
                     Encrypter encrypter = new Encrypter();
                     Usuario u = new Usuario(encrypter.getHash(edNombre.getText().toString().getBytes()),
                             encrypter.getHash(edUsername.getText().toString().getBytes()),

@@ -121,7 +121,7 @@ public class DrawerActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_horario) {
-            // Handle the camera action
+            // Handle the horario action
         } else if (id == R.id.nav_configuracion) {
 
         } else if (id == R.id.nav_preferencias) {
