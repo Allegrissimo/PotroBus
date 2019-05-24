@@ -29,6 +29,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
@@ -53,6 +54,7 @@ public class DrawerActivity extends AppCompatActivity
     private static GoogleMap mMap;
     private FusedLocationProviderClient fusedLocationClient;
     private LocationManager locationManager;
+    private static MarkerOptions bus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,10 +66,40 @@ public class DrawerActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(getParent(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+                    ActivityCompat.requestPermissions(getParent(), new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
+
+                }
+                Location lastLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                if (lastLocation!=null){
+                    LatLng mLatLng = new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude());
+                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(mLatLng, 18), 2000, null);
+                }else{
+                    fusedLocationClient.getLastLocation()
+                            .addOnSuccessListener(new OnSuccessListener<Location>() {
+                                @Override
+                                public void onSuccess(Location location) {
+                                    // Got last known location. In some rare situations this can be null.
+                                    if (location != null) {
+                                        LatLng mLatLng = new LatLng(location.getLatitude(), location.getLongitude());
+                                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(mLatLng, 18), 3000, null);
+                                    }
+                                }
+                            });
+                }
             }
         });
+
+        FloatingActionButton btnBus = findViewById(R.id.btnBus);
+        btnBus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LatLng busLatLng = bus.getPosition();
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(busLatLng, 18), 3000, null);
+            }
+        });
+
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -172,11 +204,10 @@ public class DrawerActivity extends AppCompatActivity
                         }
                     });
         }
-
         mMap.setMyLocationEnabled(true);
-        mMap.getUiSettings().setMyLocationButtonEnabled(true);
         mMap.getUiSettings().setCompassEnabled(true);
-        mMap.setOnMyLocationButtonClickListener(new GoogleMap.OnMyLocationButtonClickListener() {
+        mMap.getUiSettings().setMyLocationButtonEnabled(false);
+        /*mMap.setOnMyLocationButtonClickListener(new GoogleMap.OnMyLocationButtonClickListener() {
             @Override
             public boolean onMyLocationButtonClick() {
                 if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -204,7 +235,7 @@ public class DrawerActivity extends AppCompatActivity
                 }
                 return true;
             }
-        });
+        });*/
         //Escucha el ws con las coordenadas reales
         setRepeatingAsyncTask();
         //Hace la smulación de movimiento
@@ -280,11 +311,10 @@ public class DrawerActivity extends AppCompatActivity
                 mMap.clear();
                 mx.job.potrobus.Entities.Location busLocation = new Gson().fromJson(lastLocation, mx.job.potrobus.Entities.Location.class);
                 // Creating a marker
-                MarkerOptions bus = new MarkerOptions();
+                bus = new MarkerOptions();
                 // Setting the position for the marker
                 bus.position(new LatLng(busLocation.getLat(), busLocation.getLng()))
-                        .title("Bus "+busLocation.getId());
-                //.icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_bus_background));
+                        .title("Bus "+busLocation.getId()).icon(BitmapDescriptorFactory.fromResource(R.drawable.bus));
                 mMap.addMarker(bus);
             }else{
                 System.out.println("LastLocation is empty");
